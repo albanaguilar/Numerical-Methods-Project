@@ -29,14 +29,42 @@ int Menu( ){
 
 //BISECCION
 double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMenor,int numeroIteracciones){
+
     int iContador = 1;
     double xR1, xR2, ErrorAbsoluto, yI, yU, yR;
+
     cout << "Iteraccion " << setw(10) << "xI" << setw(10) << "xU"  << setw(10) << "xR" << setw(10)
     <<"ErrorAbsoluto" << setw(10) << "yI" << setw(10) << "yU" << setw(10) << "yR" << endl;
-    do{
 
+    do{
+        xR1 = ( LimiteInferior + LimiteSuperior) / 2;
+        yI = f1( LimiteInferior );
+        yU = f1( LimiteSuperior );
+        yR = f1( xR1 );
+
+        cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << xR1 << setw(10)
+         << ErrorAbsoluto << setw(10) << yI << setw(10) << yU << setw(10) << yR << endl;
+
+        if ( ( yI * yR ) < 0 )
+            LimiteSuperior = xR1;
+        else if ( ( yI * yR ) > 0 )
+            LimiteInferior = xR1;
+        else if ( yR == 0 ){
+            return xR1;
+            ErrorAbsoluto = 0.0;
+        }
+
+        xR2 = ( LimiteInferior + LimiteSuperior ) / 2;
+        ErrorAbsoluto = fabs( double( xR2 - xR1) / ( xR2 ) );
+        iContador++;
     }
-    while( );
+    while( ( ErrorAbsoluto > errorMenor ) && ( iContador <= numeroIteracciones) );
+
+    cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) <<
+    xR2 << setw(10) << ErrorAbsoluto << setw(10) << yI << setw(10) << yU << setw(10) << yR << endl;
+
+    if ( iContador > numeroIteracciones )
+        cout <<
 }
 
 int main()
@@ -65,7 +93,7 @@ int main()
             cin >> LimiteInferior;
             cout << "Provee limite superior";
             cin >> LimiteSuperior;
-            cout << "Error menor a: ";
+            cout << "Porcentae de error menor a: %";
             cin >> errorMenor;
             cout << "Numero de iteracciones: ";
             cin >> numeroIteracciones;
