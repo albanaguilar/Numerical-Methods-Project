@@ -12,6 +12,8 @@ Carlos Manzano
 
 #include <cstdlib>
 #include <iostream>
+#include <conio.h>
+#include <stdlib.h>
 #include <iomanip>
 #include <stdio.h>
 #include <math.h>
@@ -37,7 +39,7 @@ void escribirMatriz(int , int , float [50][50], char[10]);
 void gaussjordan(int , float [50][50], float [50][50], float [50]);
 void escvec(int, float [50], char[10]);
 void escpol(int, float [50], char [10]);
-
+void intlag(int, float[50], float[50][50])
 
 int Menu( ){
     int iOpcion;
@@ -51,7 +53,7 @@ int Menu( ){
     cout << "   5.- Secante" << endl;
     cout << "   6.- Newton-Raphson" << endl;
     cout << "   7.- Biseccion" << endl;
-    cout << "   8.- Montante" << endl;
+    cout << "   8.- Lagrange" << endl;
     cout << "   9.- Gauss - Jordan" << endl;
     cout << "   10.- Newton (interpolacion) " << endl;
     cout << "   11.- Salir" << endl;
@@ -443,6 +445,24 @@ void escpol(int iN, float dA[50], char cNom[10]){
     cout << endl;
 }
 
+void intlag(int n, float a[50], float fx[50][50] ){
+    int i, j, k, cont, h, l, t;
+    float p[50][50], constP[50][50], x[50], aux[50], PL[50];
+
+    cont = 1;
+    for ( i = 0; i <= 50; i++ ){
+        aux[i] = 1;
+    }
+
+    for ( j = 0; j < n; j++ ){
+        for (k = 0; k < n; k++ ){
+            if ( j != k )
+                aux[j] = aux[j] * ( a[j]- a[k] );
+            fx[j][2] = fx[j][1] / aux[j];
+        }
+    }
+}
+
 int main()
 {
     int iOpcion, numeroIteracciones;
@@ -540,7 +560,27 @@ int main()
             cout << "La raiz es: " << setprecision(10) << Raiz << endl;
         }
         else if ( iOpcion == 8 ){
+            int n, i;
+            float x[50], fx[50][50];
 
+            cout << endl;
+            cout << "Metodo de interpolacion de lagrange" << endl;
+            cout << "Numero de datos de la lista" ;
+            cin >> n;
+            cout << "Introduce los datos de x[i]: " << endl;
+            for ( i = 0; i <= n - 1; i++){
+                cout << endl;
+                cout << "x[" << i <<"]= ";
+                cin >> x[i];
+            }
+            cout << endl;
+            cout << "Introduce los valores de f(x)" << endl;
+            for( i = 0; i <= n - 1; i++ ){
+                cout << endl;
+                cout << "fx(" <<i <<")= ";
+                cin >> fx[i][1];
+            }
+            intlag(n, x ,fx);
         }
         else if ( iOpcion == 9 ){
             cout << "Numero de ecuaciones: ";
