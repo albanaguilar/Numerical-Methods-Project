@@ -1,14 +1,29 @@
+/*
+Proyecto final de la materia Metodos numericos en la ingenieria
+
+Integrantes:
+Alban Aguilar Campos
+Noe Flores Sifuentes
+Salvador Garcia Martinez
+Francisco Navarrete Meza
+Carlos Manzano
+
+*/
+
 #include <iostream>
 #include <iomanip>
 #include <math.h>
 
 #define f1(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 0.5 * pow(x,2) - 11.0 * x + 10.0)
+#define f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)
+#define fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)
 
 using namespace std;
 
 int Menu( ){
     int iOpcion;
 
+    cout << endl;
     cout << "Seleccione el numero del metodo que desee: " << endl;
     cout << "   1.- Trapezoidal simple" << endl;
     cout << "   2.- Trapezoidal multiple" << endl;
@@ -23,7 +38,6 @@ int Menu( ){
     cout << "   11.- Salir" << endl;
     cin >> iOpcion;
 
-    //if ( iOpcion < 10 || iOpcion > 1 )
     return iOpcion;
 }
 
@@ -71,6 +85,42 @@ double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMeno
     }
 }
 
+//NEWTON - RAPHSON
+double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracciones )
+{
+    double x2, ea, y1, yp1;
+    cout << "iteracion " << setw(10) << "xi" << setw(10) << "xi+1" << setw(10) << "Ea" << setw(10) << "f(x1)" << setw(10) << "f'(x1)" << endl;
+    for(int cont = 1; cont <= numeroIteracciones; cont++)
+    {
+        y1 = f2(LimiteInferior);
+        yp1 = fp(LimiteInferior);
+        if(yp1 == 0)
+        {
+            cout << "f'(xi) = 0" << endl;
+            break;
+        }
+        x2 = LimiteInferior - ( y1 / yp1 );
+        ea = fabs( ( x2 - LimiteInferior) / x2);
+
+        cout << setw(5) << cont << setw(15) << x1 << setw(10) << x2 << setw(10) << ea << setw(10) << y1 << setw(10) << yp1 << endl;
+
+        x1 = x2;
+
+        if(ea<es)
+        {
+            cout << "El metodo coincide a " << cont << " iteraciones." << endl;
+            return x2;
+            break;
+        }
+    }
+    if(ea>es)
+    {
+        cout << "El metodo no coincide para las " << numeroIteracciones << " iteraciones indicadas" << endl;
+    }
+    return 0;
+}
+
+
 int main()
 {
     int iOpcion, numeroIteracciones;
@@ -94,7 +144,23 @@ int main()
 
         }
         else if ( iOpcion == 6 ){
-
+            cout << "f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)" << endl;
+            cout << "fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)" << endl;
+            cout << endl;
+            cout << "Datos" << endl;
+            cout << "___________________________________________________________________" << endl;
+            cout << "Punto Inicial (Xi)= ";
+            cin >> LimiteInferior;
+            cout << endl;
+            cout << "Error = ";
+            cin >> errorMenor;
+            cout << endl;
+            cout << "Numero de iteracciones (especifique si el metodo termina antes) = ";
+            cin >> numeroIteracciones;
+            cout << endl;
+            cout.precision(4);
+            Raiz = NewtonRaphson( LimiteInferior, errorMenor,  numeroIteracciones );
+            cout << "La raiz es: " <<setprecision(10) << Raiz;
         }
         else if (iOpcion == 7 ){
             cout << endl;
