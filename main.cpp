@@ -33,8 +33,7 @@ double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMeno
     int iContador = 1;
     double xR1, xR2, ErrorAbsoluto, yI, yU, yR;
 
-    cout << "Iteraccion " << setw(10) << "xI" << setw(10) << "xU"  << setw(10) << "xR" << setw(10)
-    <<"ErrorAbsoluto" << setw(10) << "yI" << setw(10) << "yU" << setw(10) << "yR" << endl;
+    cout << "Iteraccion " << setw(10) << "Li" << setw(10) << "Ls" << setw(10) << "xR" << setw(20) <<"ErrorAbsoluto" << setw(20) << "yI" << setw(18) << "yU" << setw(18) << "yR" << endl;
 
     do{
         xR1 = ( LimiteInferior + LimiteSuperior) / 2;
@@ -42,8 +41,8 @@ double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMeno
         yU = f1( LimiteSuperior );
         yR = f1( xR1 );
 
-        cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << xR1 << setw(10)
-         << ErrorAbsoluto << setw(10) << yI << setw(10) << yU << setw(10) << yR << endl;
+        cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) << xR1 << setw(20)
+         << ErrorAbsoluto << setw(20) << yI << setw(20) << yU << setw(20) << yR << endl;
 
         if ( ( yI * yR ) < 0 )
             LimiteSuperior = xR1;
@@ -61,10 +60,15 @@ double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMeno
     while( ( ErrorAbsoluto > errorMenor ) && ( iContador <= numeroIteracciones) );
 
     cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) <<
-    xR2 << setw(10) << ErrorAbsoluto << setw(10) << yI << setw(10) << yU << setw(10) << yR << endl;
+    xR2 << setw(20) << ErrorAbsoluto << setw(20) << yI << setw(20) << yU << setw(20) << yR << endl;
 
     if ( iContador > numeroIteracciones )
-        cout <<
+        cout << "El metodo no converge para las iteracions dadas" << endl;
+    else if ( iContador <= numeroIteracciones ){
+        cout << "El metodo converge" << endl;
+        cout << endl;
+        return xR2;
+    }
 }
 
 int main()
@@ -75,20 +79,25 @@ int main()
     do {
         iOpcion = Menu( );
         if ( iOpcion == 1 ){
-           /* double h;
-            double LimiteInferior, LimiteSuperior;
-            cout << "Provee limite inferior";
-            cin >> LimiteInferior;
-            cout << "Provee limite superior";
-            cin >> LimiteSuperior;
-            h = ( LimiteSuperior - LimiteInferior ) / 2;
-            double i = ( h / 2 ) * ( LimiteInferior + ( 2 * () ) ) //POSIBLE ERROR
-*/
+
         }
         else if ( iOpcion == 2 ){
 
         }
+        else if ( iOpcion == 3 ){
+
+        }
+        else if ( iOpcion == 4 ){
+
+        }
+        else if ( iOpcion == 5 ){
+
+        }
+        else if ( iOpcion == 6 ){
+
+        }
         else if (iOpcion == 7 ){
+            cout << endl;
             cout << "Provee limite inferior";
             cin >> LimiteInferior;
             cout << "Provee limite superior";
@@ -99,6 +108,18 @@ int main()
             cin >> numeroIteracciones;
             Raiz = Biseccion( LimiteInferior, LimiteSuperior, errorMenor, numeroIteracciones );
             cout << "La raiz es: " << setprecision(10) << Raiz << endl;
+        }
+        else if ( iOpcion == 8 ){
+
+        }
+        else if ( iOpcion == 9 ){
+
+        }
+        else if ( iOpcion == 10 ){
+
+        }
+        else if ( iOpcion == 11 ){
+            return 0;
         }
     }
     while ( iOpcion < 10 || iOpcion > 0 );
