@@ -17,6 +17,7 @@ Carlos Manzano
 #define f1(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 0.5 * pow(x,2) - 11.0 * x + 10.0)
 #define f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)
 #define fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)
+#define f3(x)(1.0*pow(x,4)-5.0*pow(x,3)+10.0*pow(x,2)-10.0*x+4.0)
 
 using namespace std;
 
@@ -39,6 +40,42 @@ int Menu( ){
     cin >> iOpcion;
 
     return iOpcion;
+}
+
+//SECANTE
+double Secante( double dX0, double dX1, double errorMenor, int numeroIteracciones)
+{
+    double dX2, ErrorAbsoluto, dY0, dY1, dPend;
+
+    cout << "iteracion" << setw(10) << "xi-1" << setw(10) <<
+    "xi" << setw(10) << "xi+1" << setw(10) << "Error" << setw(10)<<
+    "f(xi-1)"<< setw(10) << "f(xi)" << setw(10) << "pend" << endl;
+
+    for(int iCont = 1; iCont <= numeroIteracciones; iCont++)
+    {
+        dY0 = f3(dX0);
+        dY1 = f3(dX1);
+        dPend = (dY1 - dY0)/(dX1 - dX0);
+        dX2 = dX1 - (dY1/dPend);
+        ErrorAbsoluto = fabs((dX2 - dX1)/(dX2));
+
+        cout << setw(5) << iCont << setw(15)<< dX0 << setw(10) << dX1 << setw(10)<< dX2 << setw(10)<<
+        ErrorAbsoluto<< setw(10) << dY0 << setw(10)<< dY1<< setw(10) << dPend << endl;
+
+        dX0 = dX1;
+        dX1 = dX2;
+
+        if( ErrorAbsoluto < errorMenor )
+        {
+            cout << "El metodo converge a" << iCont << "Iteraciones" << endl;
+            return dX2;
+            break;
+        }
+    }
+
+    if( ErrorAbsoluto > errorMenor )
+        cout << "El metodo no converge para las iteraciones especificadas" << endl;
+        return 0;
 }
 
 //BISECCION
@@ -124,7 +161,7 @@ double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracc
 int main()
 {
     int iOpcion, numeroIteracciones;
-    double errorMenor, LimiteInferior, LimiteSuperior, Raiz;
+    double errorMenor, LimiteInferior, LimiteSuperior, Raiz, dX0, dX1;
 
     do {
         iOpcion = Menu( );
@@ -141,11 +178,22 @@ int main()
 
         }
         else if ( iOpcion == 5 ){
+            cout << "Punto inicial (xi-1)" << endl;
+            cin >> dX0;
+            cout << "Punto inicial 2 (xi)" << endl;
+            cin >> dX1;
+            cout << "Error"<< endl;
+            cin >> errorMenor;
+            cout << "Numero de iteraciones" << endl;
+            cin >> numeroIteracciones;
+            cout.precision(4);
 
+            Raiz = Secante(dX0, dX1, errorMenor, numeroIteracciones);
+            cout << "La raiz es: " << setprecision(10) << Raiz << endl;
         }
         else if ( iOpcion == 6 ){
-            cout << "f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)" << endl;
-            cout << "fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)" << endl;
+            //cout << "f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)" << endl;
+          //  cout << "fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)" << endl;
             cout << endl;
             cout << "Datos" << endl;
             cout << "___________________________________________________________________" << endl;
