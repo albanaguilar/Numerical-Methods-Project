@@ -18,7 +18,7 @@ int Menu( ){
     cout << "   6.- Newton-Raphson" << endl;
     cout << "   7.- Biseccion" << endl;
     cout << "   8.- Montante" << endl;
-    cout << "   9.- Gauss" << endl;
+    cout << "   9.- Gauss - Jordan" << endl;
     cout << "   10.- Interpolacion" << endl;
     cout << "   11.- Salir" << endl;
     cin >> iOpcion;
