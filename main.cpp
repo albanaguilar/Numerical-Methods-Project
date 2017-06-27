@@ -102,18 +102,18 @@ double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracc
         x2 = LimiteInferior - ( y1 / yp1 );
         ea = fabs( ( x2 - LimiteInferior) / x2);
 
-        cout << setw(5) << cont << setw(15) << x1 << setw(10) << x2 << setw(10) << ea << setw(10) << y1 << setw(10) << yp1 << endl;
+        cout << setw(5) << cont << setw(15) << LimiteInferior << setw(10) << x2 << setw(10) << ea << setw(10) << y1 << setw(10) << yp1 << endl;
 
-        x1 = x2;
+        LimiteInferior = x2;
 
-        if(ea<es)
+        if( ea < errorMenor )
         {
             cout << "El metodo coincide a " << cont << " iteraciones." << endl;
             return x2;
             break;
         }
     }
-    if(ea>es)
+    if(ea>errorMenor)
     {
         cout << "El metodo no coincide para las " << numeroIteracciones << " iteraciones indicadas" << endl;
     }
