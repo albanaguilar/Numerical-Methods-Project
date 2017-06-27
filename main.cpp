@@ -28,7 +28,16 @@ int Menu( ){
 }
 
 //BISECCION
-//double Biseccion()
+double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMenor,int numeroIteracciones){
+    int iContador = 1;
+    double xR1, xR2, ErrorAbsoluto, yI, yU, yR;
+    cout << "Iteraccion " << setw(10) << "xI" << setw(10) << "xU"  << setw(10) << "xR" << setw(10)
+    <<"ErrorAbsoluto" << setw(10) << "yI" << setw(10) << "yU" << setw(10) << "yR" << endl;
+    do{
+
+    }
+    while( );
+}
 
 int main()
 {
@@ -61,7 +70,7 @@ int main()
             cout << "Numero de iteracciones: ";
             cin >> numeroIteracciones;
             Raiz = Biseccion( LimiteInferior, LimiteSuperior, errorMenor, numeroIteracciones );
-            cout << "La raiz es: " << Raiz << endl;
+            cout << "La raiz es: " << setprecision(10) << Raiz << endl;
         }
     }
     while ( iOpcion < 10 || iOpcion > 0 );
