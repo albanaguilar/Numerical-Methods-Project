@@ -28,11 +28,13 @@ int Menu( ){
 }
 
 //BISECCION
-double Biseccion()
+//double Biseccion()
 
 int main()
 {
-    int iOpcion;
+    int iOpcion, numeroIteracciones;
+    double errorMenor, LimiteInferior, LimiteSuperior, Raiz;
+
     do {
         iOpcion = Menu( );
         if ( iOpcion == 1 ){
@@ -54,6 +56,12 @@ int main()
             cin >> LimiteInferior;
             cout << "Provee limite superior";
             cin >> LimiteSuperior;
+            cout << "Error menor a: ";
+            cin >> errorMenor;
+            cout << "Numero de iteracciones: ";
+            cin >> numeroIteracciones;
+            Raiz = Biseccion( LimiteInferior, LimiteSuperior, errorMenor, numeroIteracciones );
+            cout << "La raiz es: " << Raiz << endl;
         }
     }
     while ( iOpcion < 10 || iOpcion > 0 );
