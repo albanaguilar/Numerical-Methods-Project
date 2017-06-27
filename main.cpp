@@ -33,8 +33,8 @@ int Menu( ){
 
     cout << endl;
     cout << "Seleccione el numero del metodo que desee: " << endl;
-    cout << "   1.- Trapezoidal simple" << endl;
-    cout << "   2.- Trapezoidal multiple" << endl;
+    cout << "   1.- Trapezoidal" << endl;
+   // cout << "   2.- Trapezoidal multiple" << endl;
     cout << "   3.- Simpson 1/3" << endl;
     cout << "   4- Simpson 3/8" << endl;
     cout << "   5.- Secante" << endl;
@@ -203,6 +203,15 @@ void escmat( int n, float x[30] ){
         cout << "x[" << i << "] = " << x[i] << endl;
 }
 
+double Trapezoidal(int iValor1, int iValor2, int iValorA, int iValorB){
+
+            double dValorH;
+            dValorH = (iValorA + iValorB) / 2.0;
+            //Cálculo de método trapezoidal.-
+            double dResultado = ( ( 1 / dValorH ) * ( iValor1 + iValor2 ) );
+            return dResultado;
+}
+
 int main()
 {
     int iOpcion, numeroIteracciones;
@@ -213,6 +222,23 @@ int main()
     do {
         iOpcion = Menu( );
         if ( iOpcion == 1 ){
+            int iValorA, iValorB, iValor1, iValor2;
+
+             //Valores para calcular el valor de H.-
+            cout << "Ingresa el valor de a para calcular H: ";
+            cin >> iValorA;
+			cout << "Ingresa el valor de b para calcular H: ";
+            cin >> iValorB;
+
+            //Valores para el cálculo de límites dentro de la integral.-
+			cout << "Ingresa el primer parámetro: ";
+            cin >> iValor1;
+            cout << "Ingresa el segundo parámetro: ";
+            cin >> iValor2;
+
+            //LLamada al método que calcula el método trapezoidal.-
+            double dResultado = Trapezoidal(iValor1, iValor2, iValorA, iValorB);
+            cout << "El resultado es: " << dResultado << endl;
 
         }
         else if ( iOpcion == 2 ){
