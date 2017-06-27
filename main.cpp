@@ -10,8 +10,10 @@ Carlos Manzano
 
 */
 
+#include <cstdlib>
 #include <iostream>
 #include <iomanip>
+#include <stdio.h>
 #include <math.h>
 
 #define f1(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 0.5 * pow(x,2) - 11.0 * x + 10.0)
@@ -20,6 +22,11 @@ Carlos Manzano
 #define f3(x)(1.0*pow(x,4)-5.0*pow(x,3)+10.0*pow(x,2)-10.0*x+4.0)
 
 using namespace std;
+
+void leemat(int , float [30][30]);
+void escmat(int, float [30]);
+float gaussjor( int , float [30][30], float [30] );
+
 
 int Menu( ){
     int iOpcion;
@@ -157,11 +164,51 @@ double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracc
     return 0;
 }
 
+//GAUSS-JORDAN
+float gaussjor( int n, float a[30][30], float x[30] ){
+    int iA, j, k;
+    float aux;
+    for( iA = 1; iA <= n; iA++ ){
+        aux = a[iA][iA];
+        for ( j = iA; j <= n + 1; j++ ){
+            a[iA][j] = a[iA][j] / aux;
+        }
+        for ( j = 1; j <= n; j++ ){
+            if( j != iA ){
+                aux = a[j][iA];
+                for (k = iA; k <= n + 1; k++){
+                    a[j][k] = ( a[j][k] ) - ( ( a[iA][k] ) * aux );
+                }
+            }
+        }
+    }
+
+    for ( iA = 1; iA <= n; iA++ )
+        x[iA] = a[iA][n + 1];
+}
+
+void leemat(int n, float a[30][30] ){
+    int i, j;
+    for (i = 1; i <= n; i++ ){
+        for( j = 1; j <= n + 1; j++ ){
+            cout << "a[" << i << "][" << j << "] = ";
+            cin >> a[i][j];
+        }
+    }
+}
+
+void escmat( int n, float x[30] ){
+    int i;
+    for ( i = 1; i <= n; i++ )
+        cout << "x[" << i << "] = " << x[i] << endl;
+}
 
 int main()
 {
     int iOpcion, numeroIteracciones;
     double errorMenor, LimiteInferior, LimiteSuperior, Raiz, dX0, dX1;
+    int n;
+    float a[30][30], x[30];
 
     do {
         iOpcion = Menu( );
@@ -227,7 +274,13 @@ int main()
 
         }
         else if ( iOpcion == 9 ){
-
+            cout << "Numero de ecuaciones: ";
+            cin >> n;
+            cout << "Introduce los valores de la matriz: ";
+            leemat(n, a);
+            gaussjor(n, a, x);
+            cout << "Soluccion " << endl;
+            escmat(n, x);
         }
         else if ( iOpcion == 10 ){
 
