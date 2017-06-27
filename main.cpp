@@ -31,6 +31,12 @@ float Potencia(int n, float Num);
 void PreparaSistema(int Ord, int Dat, float Sist[][102], float Val[][102]);
 void ResuelveGauss(int Dim, float Sist[][102]);
 void EscribeDatos(int Dim, float Sist[][102]);
+void leevec(int, float [100] , char[100]);
+void DifDivNewton(int, float [100], float [100], float [100]);
+void escribirMatriz(int , int , float [50][50], char[10]);
+void gaussjordan(int , float [50][50], float [50][50], float [50]);
+void escvec(int, float [50], char[10]);
+void escpol(int, float [50], char [10]);
 
 
 int Menu( ){
@@ -47,7 +53,7 @@ int Menu( ){
     cout << "   7.- Biseccion" << endl;
     cout << "   8.- Montante" << endl;
     cout << "   9.- Gauss - Jordan" << endl;
-    cout << "   10.- Interpolacion" << endl;
+    cout << "   10.- Newton (interpolacion) " << endl;
     cout << "   11.- Salir" << endl;
     cin >> iOpcion;
 
@@ -321,6 +327,122 @@ void EscribeDatos(int Dim, float Sist[][102])
     printf("\n\n");
 }
 
+void leevec(int iN, float iX[100], char cNom[10])
+{
+    for(int iC = 1; iC <= iN ; iC++)
+    {
+        cout << cNom << "[" << iC << "] : ";
+        cin >> iX[iC];
+    }
+}
+
+void escribirMatriz(int iN , int iM, float dA[50][50], char cNom[10])
+{
+    cout << "Matriz" << cNom << endl;
+    for (int iC = 1; iC <= iN; iC++)
+    {
+        cout << endl;
+        for(int iR = 1; iR <= iM; iR++)
+        {
+            cout << setw(10) << dA[iC][iR];
+
+
+        }
+    }
+    cout << endl;
+}
+
+void escvec(int iN, float dX[50], char cNom[10])
+{
+    for(int iC = 1; iC <= iN ; iC++)
+    {
+        cout << endl;
+        cout << cNom << "[" << iC << "] : " << dX[iC];
+    }
+    cout << endl;
+}
+
+void DifDivNewton(int iN, float dX[100], float dY[100], float dA[100])
+{
+    float DD[50][50], dP[50][50], dVX[50][50], dB[50], P[50][50];
+
+    for(int iC = 1; iC <= iN ;iC++)
+    {
+        DD[iC][1] = iC - 1;
+        DD[iC][2] = dX[iC];
+        DD[iC][3] = dY[iC];
+    }
+    for(int iR = 1; iR <= iN; iR++ )
+    {
+        for(int iC = 1; iC <= iN - iR; iC++)
+        {
+            DD[iC][iR+3] = ((DD[iC+1][2+iR])- (DD[iC][2 + iR]))/((DD[iC + iR][2]) -(DD[iC][2]));
+        }
+    }
+    escribirMatriz(iN, iN+2,DD, "DD");
+    for (int iC = 1; iC <= iN; iC++)
+    {
+        dB[iC] = DD[1][iC+2];
+    }
+
+    cout << "Valores de B" << endl;
+    escvec(iN, dB, "dB");
+    for(int iC = 1; iC <= iN ; iC++)
+    {
+        for(int iR = 1; iR <= iN; iR++)
+        {
+            P[iC][iR] = 0;
+        }
+
+    }
+    for(int iC = 1; iC <= iN ; iC++)
+    {
+        P[iC][1] = 1;
+    }
+    for(int iC = 2; iC <= iN; iC++)
+    {
+        for(int iR = 2; iR <= iC; iR++)
+        {
+            P[iC][iR] = ((P[iC -1][iR - 1])* (-1 * dX[iC -1 ]))+ P[iC - 1][iR];
+        }
+    }
+
+    escribirMatriz(iN, iN, P, "Polinomios");
+
+
+    for(int iC = 1; iC <= iN; iC++)
+    {
+        for(int iR = 1; iR <= iN; iR++)
+        {
+            P[iC][iR] = P[iC][iR] * dB[iC];
+        }
+    }
+    escribirMatriz(iN, iN , P , "Polinomios");
+
+    for(int iR = 1; iR <= iN; iR++)
+    {
+        dA[iR -1] = 0;
+        for(int iC = iR; iC <= iN ; iC++)
+        {
+            dA[iR -1] = dA[iR - 1] + P[iC][iC+1 - iR];
+        }
+    }
+    escpol(iN - 1, dA, "P(x)" );
+}
+
+void escpol(int iN, float dA[50], char cNom[10]){
+    cout << "Polinomio" << cNom << " = ";
+    for(int iC = 0; iC <= iN; iC++)
+    {
+        cout << dA[iC] << "X^" << iC;
+            if (iC < iN)
+            {
+                cout << "+ ";
+            }
+    }
+    cout << endl;
+}
+
 int main()
 {
     int iOpcion, numeroIteracciones;
@@ -430,7 +552,18 @@ int main()
             escmat(n, x);
         }
         else if ( iOpcion == 10 ){
+            int iM, iN;
+            float dX[100], dY[100], dA[100];
 
+            cout << " >>>>>>>>>>> Dif de Newton >>>>>>>>>>>>>>>>>>" << endl;
+            cout << "Cuantos puntos desea : " << endl;
+            cin >> iN;
+            cout << "Vector de x" << endl;
+            leevec(iN, dX, "X");
+            cout << "Vector de y" << endl;
+            leevec(iN, dY, "Y");
+
+            DifDivNewton(iN, dX, dY, dA);
         }
         else if ( iOpcion == 11 ){
             return 0;
