@@ -461,6 +461,18 @@ void intlag(int n, float a[50], float fx[50][50] ){
             fx[j][2] = fx[j][1] / aux[j];
         }
     }
+
+    for ( i = 0; i < n; i++ )
+        a[i] = a[i] * -1;
+
+    for ( l = 0; l <= n - 1; l++ ){
+        t = 0;
+        for ( j = 0; j < n; j++ ){
+            if (j != l){
+                x[t] = a[j]
+            }
+        }
+    }
 }
 
 int main()
