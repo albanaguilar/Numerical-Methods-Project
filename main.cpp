@@ -39,7 +39,7 @@ void escribirMatriz(int , int , float [50][50], char[10]);
 void gaussjordan(int , float [50][50], float [50][50], float [50]);
 void escvec(int, float [50], char[10]);
 void escpol(int, float [50], char [10]);
-void intlag(int, float[50], float[50][50])
+void intlag(int, float[50], float[50][50]);
 
 int Menu( ){
     int iOpcion;
@@ -447,7 +447,7 @@ void escpol(int iN, float dA[50], char cNom[10]){
 
 void intlag(int n, float a[50], float fx[50][50] ){
     int i, j, k, cont, h, l, t;
-    float p[50][50], constP[50][50], x[50], aux[50], PL[50];
+    float P[50][50], constP[50][50], x[50], aux[50], PL[50];
 
     cont = 1;
     for ( i = 0; i <= 50; i++ ){
@@ -469,10 +469,53 @@ void intlag(int n, float a[50], float fx[50][50] ){
         t = 0;
         for ( j = 0; j < n; j++ ){
             if (j != l){
-                x[t] = a[j]
+                x[t] = a[j];
+                t++;
             }
         }
+
+        P[0][0] = 1;
+        for (i = 0;  i < n; i++ ){
+
+            for ( j = 1; j < n; j++ ){
+                if (i == j)
+                    P[i][j] = P[i - 1][j - 1] * x[i - 1];
+            }
+
+            for ( j = 1; j <= n; j++ ){
+                if (i == 0)
+                    P[j][i] = P[0][0];
+            }
+
+            for ( j = 1; j < n - 1; j++ ){
+                if (i == 1)
+                    P[j + 1][i] = P[j][i] + x[j];
+            }
+
+            for ( j = 2; j < n; j++ ){
+                for( h = j + 1; h < n; h++ ){
+                    if (i == j)
+                        P[h][j] = P[h - 1][j] + (P[h - 1][j - 1] * x[h - 1]);
+                }
+            }
+        }
+
+        for (j = 0; j < n; j++ )
+            constP[0][j] = fx[l][2] * P[n - 1][j];
+
+        for (i = 0; i < n; i++ ){
+            for (j = 0; j < n; j++){
+                PL[i] = PL[i] + constP[j][i];
+            }
+        }
+        cont++;
     }
+
+    cout << endl << endl;;
+    cout << "El polinomio de Lagrange: " << endl << endl;
+    cout << "(" <<PL[0]-1 << "x^" << n-1-i << ") + ";
+    for (i = 1; i < n; i++ )
+        cout << "(" <<PL[i] << "x^" << n-1-i << ") + ";
 }
 
 int main()
