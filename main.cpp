@@ -371,13 +371,37 @@ void escmat( int n, float x[30] ){
         cout << "x[" << i << "] = " << x[i] << endl;
 }
 
-double Trapezoidal(int iValor1, int iValor2, int iValorA, int iValorB){
+double Trapezoidal(){
+    int N;
+    double h,a,b,i,suma,F,xi,t;
 
-            double dValorH;
-            dValorH = (iValorA + iValorB) / 2.0;
-            //Cálculo de método trapezoidal.-
-            double dResultado = ( ( 1 / dValorH ) * ( iValor1 + iValor2 ) );
-            return dResultado;
+    cout<<"METODO DE INTEGRACION TRAPEZOIDAL"<<endl<<endl<<endl;
+    cout<<"LA FUNCION A INTEGRAR ES: SEN(X)/(1+X^4)^0.5 "<<endl<<endl<<endl;
+    cout<<"INGRESE EL LIMITE INFERIOR DE LA INTEGRAL--(A): ";
+    cin>>a;//LIMITE INFERIODE LA INTEGRACION
+    cout<<"INGRESE EL LIMITE SUPERIOR DE LA INTEGRAL--(B): ";
+    cin>>b;//LIMITESUPERIO DE LA INTEGRACION
+    cout<<"INGRESE N: ";
+    cin>>N;//ES EL NUMERO DE LAS ITERACIONES
+
+    h=(b-a)/N;
+    i=0;
+    suma=0;
+
+    for(i=0;i<=N;i++){
+        xi=a+i*h;
+        F=sin(xi)/ pow( (1+ xi*xi*xi*xi) , 0.5);
+        suma=suma+F;
+        t=suma*h;
+    }
+
+    cout<<"los valores son : "<<endl ;
+    cout<<"a= "<<a<<endl; // endl hace salto de linea
+    cout<<"b= "<<b<<endl;
+    cout<<"h= "<<h<<endl<<endl;
+    cout<<"suma es: "<<suma<<endl<<endl<<endl;
+    cout<<" LA INTEGRAL ES : "<<t<<endl;
+
 }
 
 void PideDatos(int *Dat, int *Ord,float Val[][102])
@@ -686,24 +710,7 @@ int main()
     do {
         iOpcion = Menu( );
         if ( iOpcion == 1 ){
-            int iValorA, iValorB, iValor1, iValor2;
-
-             //Valores para calcular el valor de H.-
-            cout << "Ingresa el valor de a para calcular H: ";
-            cin >> iValorA;
-			cout << "Ingresa el valor de b para calcular H: ";
-            cin >> iValorB;
-
-            //Valores para el cálculo de límites dentro de la integral.-
-			cout << "Ingresa el primer parámetro: ";
-            cin >> iValor1;
-            cout << "Ingresa el segundo parámetro: ";
-            cin >> iValor2;
-
-            //LLamada al método que calcula el método trapezoidal.-
-            double dResultado = Trapezoidal(iValor1, iValor2, iValorA, iValorB);
-            cout << "El resultado es: " << dResultado << endl;
-
+            Trapezoidal();
         }
         else if ( iOpcion == 2 ){
             int Datos,Orden,C;
