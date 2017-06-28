@@ -62,6 +62,56 @@ int Menu( ){
     return iOpcion;
 }
 
+double funcion(double dx)
+{
+       double dFuncion;
+       dFuncion= 0.2 + 25.0 * dx - 200.0 * pow(dx ,2) + 675.0 * pow(dx , 3) - 900.0 * pow(dx , 4) + 400.0 * pow(dx, 5);
+       return dFuncion;
+}
+
+
+double simpson ( double dArea, double dS1, double dS2, double dx, double dN, double dA, double dB, double di, double dH)
+{
+    cout << "Ingrese el numero de Trapecios: ";
+    cin >> dN;
+    cout << "Ingrese el limite inferior: ";
+    cin >> dA;
+    cout << "Ingrese el limite superior ";
+    cin >> dB;
+
+    dS1 = 0;
+    dS2 = 0;
+    dx = dA;
+    dH = (dB - dA) / dN;
+
+    cout<< "h: " << dH << endl;
+
+    if(dN == 2)
+    {
+        dx = dx + dH;
+        dS1 = dS1 + funcion(dx);
+        dArea = (dH / 3) * (funcion(dA) + funcion(dB) + 4 * dS1 + 2 * dS2);
+        cout << "El area es : " << dArea;
+        cout << endl;
+    }
+    else
+        {
+            for(di = 1; di <= ((dN / 2 ) - 1); di++)
+            {
+                dx = dx + dH;
+                dS1 = dS1 + funcion(dx);
+                dx = dx + dH;
+                dS2 = dS2 + funcion(dx);
+            }
+    dx = dx + dH;
+    dS1 = dS1 + funcion(dx);
+    dArea =((funcion(dA) + funcion(dB) + 4 * dS1 + 2 * dS2) *(dH / 3));
+    cout << "El area es : " << dArea;
+
+      }
+
+}
+
 //SECANTE
 double secante(double dX0, double dX1, double des, int iIter)
 {
@@ -567,7 +617,8 @@ int main()
                 printf(" + (%f)X^%d",Sistema[C][Orden+1],C-1);
         }
         else if ( iOpcion == 3 ){
-
+            double  dArea, dS1, dS2, dx , dN, dA, dB, di , dH;
+            simpson ( dArea,dS1,dS2,dx,dN,dA,dB,di,dH);
         }
         else if ( iOpcion == 4 ){
 
