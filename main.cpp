@@ -56,10 +56,93 @@ int Menu( ){
     cout << "   8.- Lagrange" << endl;
     cout << "   9.- Gauss - Jordan" << endl;
     cout << "   10.- Newton (diferencias divididas) " << endl;
-    cout << "   11.- Salir" << endl;
+    cout << "   11.- Montante" << endl;
+    cout << "   12.- Salir" << endl;
     cin >> iOpcion;
 
     return iOpcion;
+}
+
+void monty(){
+	int n, x, y,w;
+	cout<<"Ingrese el grado de la matriz: ";
+	cin>> n;
+
+	double A[n][n];
+	double B[n][n];
+	double mata[n];
+	double matb[n];
+
+	for (x = 0; x < n; x++){
+			cout<< "Ingrese los elementos del renglon " << x+1 <<endl;
+		for(y = 0; y < n; y++){
+			cin>> A[x][y];
+			B[x][y]=0;
+		}
+		matb[x]=0;
+	}
+	cout<<"Ingrese la columna de resultados:" << endl;
+	for (x = 0; x < n; x++){
+		cin >> mata[x];
+		matb[x] = mata[x];
+	}
+	cout<<"Matriz seleccionada" <<endl;
+	for (x = 0; x < n; x++){ //MUESTRA LA MATRIZ INGRESADA
+		for(y = 0; y < n; y++){
+			cout<<A[x][y]<<"\t";
+		}
+		cout<<endl;
+	}
+	for(x = 0; x < n ; x++){
+		for (y = 0; y < n ; y++){
+			B[x][y]=A[x][y];
+		}
+		for (y = 0; y < n ; y++){
+			if (y == x){
+			}
+			else {
+				B[y][x]=0;
+			}
+		}
+		for (y = 0; y < n; y++){
+			B[y][y]=A[x][x];
+		}
+		for (y = 0; y < n; y++){
+			if (y == x){
+			}
+			else {
+				matb[y] = (mata[y]* A[x][x]) - (A[y][x] * mata[x]);
+				if (x == 0){
+				}
+				else {
+					matb[y]= matb[y] / A[0][0];
+				}
+			}
+			for (w = x+1 ; w<n ; w++){
+			if (y == x){
+			}
+			else {
+				B[y][w]= (A[y][w]* A[x][x]) - (A[y][x] * A[x][w]);
+				if (x == 0){
+				}
+				else {
+					B[y][w]=B[y][w] / A[0][0];
+				}
+			}
+		}
+		}
+		for (y = 0; y < n ; y++){
+			for (w = 0; w<n; w++){
+				A[y][w]=B[y][w];
+			}
+			mata[y]=matb[y];
+		}
+	}
+
+cout<<"Los valores de x son : ";
+for(x = 0; x<n ; x++){
+	cout<<"X"<<x<<" = "<<matb[x] / B[x][x] <<endl;
+}
 }
 
 float f(float(x))
@@ -770,10 +853,13 @@ int main()
 
         }
         else if ( iOpcion == 11 ){
+            monty();
+        }
+        else if ( iOpcion == 12 ){
             return 0;
         }
     }
-    while ( iOpcion < 10 || iOpcion > 0 );
+    while ( iOpcion < 12 || iOpcion > 0 );
 
 
     return 0;
