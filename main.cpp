@@ -670,7 +670,7 @@ int main()
             cout << A <<endl;
 
             E = -(d * d * d * d * d * 6 * 3 / 80);
-
+//
             cout << "El error total es : ";
             cout << E << endl;
         }
