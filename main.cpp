@@ -41,6 +41,8 @@ void gaussjordan(int , float [50][50], float [50][50], float [50]);
 void escvec(int, float [50], char[10]);
 void escpol(int, float [50], char [10]);
 void intlag(int, float[50], float[50][50]);
+double fbi(double x);
+double biseccion ( double a, double b, double tol, int maxlter);
 
 int Menu( ){
     int iOpcion;
@@ -255,48 +257,31 @@ double secante(double dX0, double dX1, double des, int iIter)
 }
 
 //BISECCION
-double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMenor,int numeroIteracciones){
-
-    int iContador = 1;
-    double xR1, xR2, ErrorAbsoluto, yI, yU, yR;
-
-    cout << "Iteraccion " << setw(10) << "Li" << setw(10) << "Ls" << setw(10) << "xR" << setw(20) <<"ErrorAbsoluto" << setw(20) << "yI" << setw(18) << "yU" << setw(18) << "yR" << endl;
-
-    do{
-        xR1 = ( LimiteInferior + LimiteSuperior) / 2;
-        yI = fb( LimiteInferior );
-        yU = fb( LimiteSuperior );
-        yR = fb( xR1 );
-
-        cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) << xR1 << setw(20)
-         << ErrorAbsoluto << setw(20) << yI << setw(20) << yU << setw(20) << yR << endl;
-
-        if ( ( yI * yR ) < 0 )
-            LimiteSuperior = xR1;
-        else if ( ( yI * yR ) > 0 )
-            LimiteInferior = xR1;
-        else if ( yR == 0 ){
-            return xR1;
-            ErrorAbsoluto = 0.0;
-        }
-
-        xR2 = ( LimiteInferior + LimiteSuperior ) / 2;
-        ErrorAbsoluto = fabs( double( xR2 - xR1) / ( xR2 ) );
-        iContador++;
-    }
-    while( ( ErrorAbsoluto > errorMenor ) && ( iContador <= numeroIteracciones) );
-
-    cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) <<
-    xR2 << setw(20) << ErrorAbsoluto << setw(20) << yI << setw(20) << yU << setw(20) << yR << endl;
-
-    if ( iContador > numeroIteracciones )
-        cout << "El metodo no converge para las iteracions dadas" << endl;
-    else if ( iContador <= numeroIteracciones ){
-        cout << "El metodo converge" << endl;
-        cout << endl;
-        return xR2;
-    }
-}
+double fbi(double x)
+ {
+        return  (( 3.0 * 3.1416 * pow(x,2) ) - ( (3.1416 * pow(x,2)) / 3) - 30 );
+ }
+ double biseccion(double a, double b, double tol, int maxlter)
+ {
+        double c;
+        int nolter = 0;
+        do
+        {
+            c = (a+b)/2;
+            if(fbi(a)*fbi(c)<0)
+            {
+               b = c;
+            }
+            else
+            {
+               a = c;
+            }
+            cout << nolter << "\t" << a << "\t" << b << "\t" << c << "\t" <<fbi(c)<<endl;
+            nolter++;
+         }
+         while((abs(fbi(c))>tol)&&(nolter<maxlter));
+         return c;
+ }
 
 //NEWTON - RAPHSON
 double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracciones )
@@ -803,17 +788,25 @@ int main()
             cout << endl;
         }
         else if (iOpcion == 7 ){
+            double a, b, tol, raiz;
+            int maxlter;
+
+            cout << "Metodo para Biseccion" << endl << endl;
+            cout << "Limite Inferior:  ";
+            cin >> a;
             cout << endl;
-            cout << "Provee limite inferior";
-            cin >> LimiteInferior;
-            cout << "Provee limite superior";
-            cin >> LimiteSuperior;
-            cout << "Porcentae de error menor a: %";
-            cin >> errorMenor;
-            cout << "Numero de iteracciones: ";
-            cin >> numeroIteracciones;
-            Raiz = Biseccion( LimiteInferior, LimiteSuperior, errorMenor, numeroIteracciones );
-            cout << "La raiz es: " << setprecision(10) << Raiz << endl;
+            cout << "Limite superior:  ";
+            cin >> b;
+            cout << endl;
+            cout << "Error:  ";
+            cin >> tol;
+            cout << endl;
+            cout << "Iteraccion:  ";
+            cin >> maxlter;
+            cout << endl;
+            raiz = biseccion(a,b,tol,maxlter);
+            cout << endl;
+            cout << "La raiz es: " << raiz << "%" << endl;
         }
         else if ( iOpcion == 8 ){
             int n, i;
