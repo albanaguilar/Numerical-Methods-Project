@@ -15,6 +15,7 @@ Carlos Manzano
 #include <conio.h>
 #include <stdlib.h>
 #include <iomanip>
+#include <string>
 #include <stdio.h>
 #include <math.h>
 
@@ -257,7 +258,7 @@ double secante(double dX0, double dX1, double des, int iIter)
 }
 
 //BISECCION
-double fbi(double x)
+ double fbi(double x)
  {
         return  (( 3.0 * 3.1416 * pow(x,2) ) - ( (3.1416 * pow(x,2)) / 3) - 30 );
  }
@@ -273,13 +274,12 @@ double fbi(double x)
                b = c;
             }
             else
-            {
                a = c;
-            }
-            cout << nolter << "\t" << a << "\t" << b << "\t" << c << "\t" <<fbi(c)<<endl;
+
+            cout << nolter << "\t" << a << "\t" << b << "\t" << c << "\t" <<f(c)<<endl;
             nolter++;
          }
-         while((abs(fbi(c))>tol)&&(nolter<maxlter));
+         while((fabs(fbi(c))>tol)&&(nolter<maxlter));
          return c;
  }
 
