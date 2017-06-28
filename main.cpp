@@ -18,7 +18,8 @@ Carlos Manzano
 #include <stdio.h>
 #include <math.h>
 
-#define f1(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 0.5 * pow(x,2) - 11.0 * x + 10.0)
+#define f1(x)(1.0 * pow(x,4) - 8.0 * pow(x,3) - 35.0 * pow(x , 2)  + 450.0 * x - 1001)  //secante
+#define fb(x)( ( 3.0 * 3.1416 * pow(x,2) ) - ( (3.1416 * pow(x,2)) / 3) - 30 ) //Biseccion  //ERROR
 #define f2(x)(10.0 - 20.0*(exp(-0.15 * x) - exp(-0.5 * x))-5)
 #define fp(x)(3.0 * pow(0.6065,x)*(pow(1.419,x) - 3.33))
 #define f3(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 10.0 * pow(x,2) - 10.0 * x + 4.0)
@@ -241,7 +242,7 @@ double secante(double dX0, double dX1, double des, int iIter)
 
         if(dea < des)
         {
-            cout << "El metodo converge a" << iCont << "Iteraciones" << endl;
+            cout << "El metodo converge a las " << iCont << " iteraciones" << endl;
             return dX2;
             break;
         }
@@ -263,9 +264,9 @@ double Biseccion( double LimiteInferior, double LimiteSuperior, double errorMeno
 
     do{
         xR1 = ( LimiteInferior + LimiteSuperior) / 2;
-        yI = f1( LimiteInferior );
-        yU = f1( LimiteSuperior );
-        yR = f1( xR1 );
+        yI = fb( LimiteInferior );
+        yU = fb( LimiteSuperior );
+        yR = fb( xR1 );
 
         cout << setw(5) << iContador << setw(15) << LimiteInferior << setw(10) << LimiteSuperior << setw(10) << xR1 << setw(20)
          << ErrorAbsoluto << setw(20) << yI << setw(20) << yU << setw(20) << yR << endl;
