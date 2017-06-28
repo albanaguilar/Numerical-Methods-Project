@@ -55,7 +55,7 @@ int Menu( ){
     cout << "   7.- Biseccion" << endl;
     cout << "   8.- Lagrange" << endl;
     cout << "   9.- Gauss - Jordan" << endl;
-    cout << "   10.- Newton (interpolacion) " << endl;
+    cout << "   10.- Newton (diferencias divididas) " << endl;
     cout << "   11.- Salir" << endl;
     cin >> iOpcion;
 
@@ -431,9 +431,11 @@ void DifDivNewton(int iN, float dX[100], float dY[100], float dA[100])
         }
     }
     escpol(iN - 1, dA, "P(x)" );
+
 }
 
-void escpol(int iN, float dA[50], char cNom[10]){
+void escpol(int iN, float dA[50], char cNom[10])
+{
     cout << "Polinomio" << cNom << " = ";
     for(int iC = 0; iC <= iN; iC++)
     {
@@ -444,7 +446,8 @@ void escpol(int iN, float dA[50], char cNom[10]){
             }
     }
     cout << endl;
-}
+    }
+
 
 void intlag(int n, float a[50], float fx[50][50] ){
     int i, j, k, cont, h, l, t;
@@ -654,7 +657,6 @@ int main()
             int iM, iN;
             float dX[100], dY[100], dA[100];
 
-            cout << " >>>>>>>>>>> Dif de Newton >>>>>>>>>>>>>>>>>>" << endl;
             cout << "Cuantos puntos desea : " << endl;
             cin >> iN;
             cout << "Vector de x" << endl;
@@ -663,6 +665,7 @@ int main()
             leevec(iN, dY, "Y");
 
             DifDivNewton(iN, dX, dY, dA);
+
         }
         else if ( iOpcion == 11 ){
             return 0;
