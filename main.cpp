@@ -19,8 +19,8 @@ Carlos Manzano
 #include <math.h>
 
 #define f1(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 0.5 * pow(x,2) - 11.0 * x + 10.0)
-#define f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)
-#define fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)
+#define f2(x)(10.0 - 20.0*(exp(-0.15 * x) - exp(-0.5 * x))-5)
+#define fp(x)(3.0 * pow(0.6065,x)*(pow(1.419,x) - 3.33))
 #define f3(x)(1.0 * pow(x,4) - 5.0 * pow(x,3) + 10.0 * pow(x,2) - 10.0 * x + 4.0)
 
 using namespace std;
@@ -54,11 +54,15 @@ int Menu( ){
     cout << "   6.- Newton-Raphson" << endl;
     cout << "   7.- Biseccion" << endl;
     cout << "   8.- Lagrange" << endl;
-    cout << "   9.- Gauss - Jordan" << endl;
+    cout << "   9.- Eliminacion Gausseana" << endl;
     cout << "   10.- Newton (diferencias divididas) " << endl;
     cout << "   11.- Montante" << endl;
     cout << "   12.- Salir" << endl;
+
+
+    cout << endl << "Opcion: ";
     cin >> iOpcion;
+    cout << endl;
 
     return iOpcion;
 }
@@ -328,7 +332,6 @@ double NewtonRaphson(double LimiteInferior, double errorMenor, int numeroIteracc
     return 0;
 }
 
-//GAUSS-JORDAN
 float gaussjor( int n, float a[30][30], float x[30] ){
     int iA, j, k;
     float aux;
@@ -773,13 +776,10 @@ int main()
 
             dRaiz = secante(dX0, dX1, des, iIter);
             cout << "La raiz es: " << setprecision(10) << dRaiz << endl;
+            cout << endl;
         }
         else if ( iOpcion == 6 ){
-            //cout << "f2(x)(1.0*pow(x,5)-4.0*pow(x,4)+5.0*pow(x,3)-6.0*x+4.0)" << endl;
-          //  cout << "fp(x)(5.0*pow(x,4)-16.0*pow(x,3)+15.0*pow(x,2)-6.0)" << endl;
             cout << endl;
-            cout << "Datos" << endl;
-            cout << "___________________________________________________________________" << endl;
             cout << "Punto Inicial (Xi)= ";
             cin >> LimiteInferior;
             cout << endl;
@@ -792,6 +792,7 @@ int main()
             cout.precision(4);
             Raiz = NewtonRaphson( LimiteInferior, errorMenor,  numeroIteracciones );
             cout << "La raiz es: " <<setprecision(10) << Raiz;
+            cout << endl;
         }
         else if (iOpcion == 7 ){
             cout << endl;
