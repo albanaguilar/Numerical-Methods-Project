@@ -62,6 +62,23 @@ int Menu( ){
     return iOpcion;
 }
 
+float f(float(x))
+{
+    return (pow(x,3)+pow(x,2)-(4*x)-5);
+}
+
+
+float g(float(x))
+{
+    return (3*pow(x,2)+2*x-4);
+}
+
+
+float h(float(x))
+{
+    return (6*x+4);
+}
+
 double funcion(double dx)
 {
        double dFuncion;
@@ -621,7 +638,41 @@ int main()
             simpson ( dArea,dS1,dS2,dx,dN,dA,dB,di,dH);
         }
         else if ( iOpcion == 4 ){
+            int i;
+            float a, b, d, n, I = 0, J = 0, A, K = 0, E = 0;
+            cout << " Formula f(x)= x^3 + 2x^2 - 4x - 5 " << endl;
+            cout << "Limite inferior: ";
+            cin >> a;
+            cout << endl;
+            cout << "Limite superior ";
+            cin >> b;
+            cout << endl;
+            cout << "Numero de intervalos : ";
+            cin >> n;
+            cout << endl;
+            d = (b - a) / n;
 
+            for(i = 1; i < n; i++)
+            {
+                I = I + f(a + (i * d));
+            }
+            for(i = 3; i < n - 1; i++)
+            {
+                if((i % 3) == 0)
+                {
+                    J = J + f(a + (i * d));
+                }
+            }
+
+            A = 3 *(d / 8) * (f(a) + (3 * I) - J + f(b));
+
+            cout << "El valor de la integral es: ";
+            cout << A <<endl;
+
+            E = -(d * d * d * d * d * 6 * 3 / 80);
+
+            cout << "El error total es : ";
+            cout << E << endl;
         }
         else if ( iOpcion == 5 ){
             int iIter;
